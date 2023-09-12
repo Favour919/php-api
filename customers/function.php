@@ -155,23 +155,15 @@
         global $conn;
 
         $name = mysqli_real_escape_string($conn, $customerInput['name']);
-        $email = mysqli_real_escape_string($conn, $customerInput['email']);
-        $phone = mysqli_real_escape_string($conn, $customerInput['phone']);
+       
 
         if(empty(trim($name))){
 
             return error422("Enter Your Name");
 
-        }elseif (empty(trim($email))) {
-
-            return error422("Enter Your Email");
-            
-        }elseif (empty(trim($phone))) {
-
-            return error422("Enter Your Phone");
             
         }else {
-            $query = "INSERT INTO customers (name,email,phone) VALUES ('$name','$email','$phone')";
+            $query = "INSERT INTO customers (name) VALUES ('$name')";
             $res = mysqli_query($conn, $query);
 
             if($res){
@@ -222,23 +214,14 @@
         $customerId = mysqli_real_escape_string($conn, $customerParams['id']);
 
         $name = mysqli_real_escape_string($conn, $customerInput['name']);
-        $email = mysqli_real_escape_string($conn, $customerInput['email']);
-        $phone = mysqli_real_escape_string($conn, $customerInput['phone']);
 
         if(empty(trim($name))){
 
             return error422("Enter Your Name");
 
-        }elseif (empty(trim($email))) {
-
-            return error422("Enter Your Email");
-            
-        }elseif (empty(trim($phone))) {
-
-            return error422("Enter Your Phone");
             
         }else {
-            $query = "UPDATE customers SET name='$name',email='$email',phone='$phone' WHERE id='$customerId' LIMIT 1 ";
+            $query = "UPDATE customers SET name='$name' WHERE id='$customerId' LIMIT 1 ";
             $res = mysqli_query($conn, $query);
 
             if($res){
