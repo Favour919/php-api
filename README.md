@@ -3,7 +3,6 @@
 This is a REST API with basic CRUD operation. It is built with Laravel 10 and MySQL 8.0.30. It is a simple API that can be used to create, read, update and delete 'person' resource.
 
 ## Table of Contents
-- [Installation](#installation)
 - [Configuration](#configuration)
 - [Usage](#usage)
 - [Error Handling](#error-handling)
