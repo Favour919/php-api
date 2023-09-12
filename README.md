@@ -3,16 +3,11 @@
 This is a REST API with basic CRUD operation. It is built with Laravel 10 and MySQL 8.0.30. It is a simple API that can be used to create, read, update and delete 'person' resource.
 
 ## Table of Contents
-- [Configuration](#configuration)
 - [Usage](#usage)
 - [Error Handling](#error-handling)
 - [Testing](#testing)
 - [UML Diagram](#uml-diagram)
 
-
-## Configuration
-- The API can be configured to use a different database by updating the database credentials in the .env file.
-- The API can be configured to use a different base URL by updating the APP_URL variable in the .env file. By default, the base URL is set to http://localhost:8000
 
 ## Usage
 - Detailed documentation of the API can be found here: [API Documentation](DOCUMENTATION.md)
