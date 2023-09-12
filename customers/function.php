@@ -32,7 +32,7 @@
                 ];
                 
                 header("HTTP/1.0 200 Ok");
-                return json_encode($data);
+                return json_encode($data, JSON_PRETTY_PRINT);
 
 
             }else 
@@ -57,7 +57,7 @@
             ];
             
             header("HTTP/1.0 201 Created");
-            return json_encode($data);
+            return json_encode($data, JSON_PRETTY_PRINT);
 
         }else {
 
@@ -98,7 +98,7 @@
                 ];
                 
                 header("HTTP/1.0 200 Customer List Fetch Successfully");
-                return json_encode($data);
+                return json_encode($data, JSON_PRETTY_PRINT);
 
 
             }else 
@@ -184,7 +184,7 @@
                 ];
                 
                 header("HTTP/1.0 201 Created");
-                return json_encode($data);
+                return json_encode($data, JSON_PRETTY_PRINT);
 
             }else {
 
@@ -203,9 +203,23 @@
 
     }
 
-    function updateCustomer($customerInput){
+    function updateCustomer($customerInput, $customerParams){
 
         global $conn;
+
+        
+        if(!isset($customerParams['id'])){
+            
+            return error422("Customer Id not found in the url");
+            
+        }elseif ($customerParams['id'] == null) {
+            
+            return error422("Enter customer Id");
+            
+        }
+
+        
+        $customerId = mysqli_real_escape_string($conn, $customerParams['id']);
 
         $name = mysqli_real_escape_string($conn, $customerInput['name']);
         $email = mysqli_real_escape_string($conn, $customerInput['email']);
@@ -224,20 +238,20 @@
             return error422("Enter Your Phone");
             
         }else {
-            $query = "INSERT INTO customers (name,email,phone) VALUES ('$name','$email','$phone')";
+            $query = "UPDATE customers SET name='$name',email='$email',phone='$phone' WHERE id='$customerId' LIMIT 1 ";
             $res = mysqli_query($conn, $query);
 
             if($res){
 
                 $data = [
 
-                    'status' => 201,
-                    'message' => 'Customer Created Successfully'
+                    'status' => 200,
+                    'message' => 'Customer Updated Successfully'
             
                 ];
                 
-                header("HTTP/1.0 201 Created");
-                return json_encode($data);
+                header("HTTP/1.0 200 Success");
+                return json_encode($data, JSON_PRETTY_PRINT);
 
             }else {
 

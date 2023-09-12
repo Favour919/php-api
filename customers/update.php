@@ -17,15 +17,7 @@ if ($requestMethod == "PUT") {
     
     $inputData = json_decode(file_get_contents("php://input"), true);
 
-    if(empty($inputData)){
-
-        
-        $updateCustomer = updateCustomer($_POST, $_GET);
-
-    }else {
-        $updateCustomer = updateCustomer($inputData, $_GET);
-    }
-
+    $updateCustomer = updateCustomer($inputData, $_GET);
     echo $updateCustomer;
     
     
