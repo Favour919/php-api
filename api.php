@@ -1,6 +1,6 @@
 <?php
 //include database
-require_once('db_connect.php');
+require_once('dbcon.php');
 // Set the response headers to indicate JSON content
 header('Content-Type: application/json');
 
