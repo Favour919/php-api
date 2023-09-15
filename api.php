@@ -5,10 +5,10 @@ require_once('dbcon.php');
 header('Content-Type: application/json');
 
 //get  people person by name
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    if (isset($_GET['person'])) {
-        $name = $_GET['person'];
-        $sql = "SELECT * FROM users WHERE name = ?";
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    if (isset($_GET['id'])) {
+        $name = $_GET['id'];
+        $sql = "SELECT * FROM users WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('s', $name);
         $stmt->execute();
@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         echo json_encode(['message' => 'insert a name to fetch']);
     }
     // Post method to Insert data into the database
-} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+} elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
         global $conn;
         $data = json_decode(file_get_contents('php://input'), true);
         $name = $data['name'];
@@ -38,23 +38,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         echo json_encode(['message' => 'Failed to create person']);
     }
     //editing/updating person using ID
-}elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+}elseif ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+    if (isset($_GET['id'])){
+        $id = $_GET['id'];
         $data = json_decode(file_get_contents('php://input'), true);
-        $id = $data['id'];
+        //$id = $data['id'];
         $name = $data['name'];
-        $sql = "UPDATE users SET name = ? WHERE id = ?";
-        $stmt = $conn->prepare($sq);
+        $sql = "UPDATE users SET name= ? WHERE id= ?";
+        $stmt = $conn->prepare($sql);
         $stmt->bind_param('si', $name, $id);
     if ($stmt->execute()) {
         echo json_encode(['message' => 'Person updated successfully']);
     } else {
         echo json_encode(['message' => 'Failed to update person']);
     }
+    }
+       
 // deleteing person by ID
-}elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+}elseif ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
+    if (isset($_GET['id'])){
+        $id = $_GET['id'];
         parse_str(file_get_contents("php://input"), $data);
-        $id = $data['id'];
-        $sql = "DELETE FROM users WHERE id = ?";
+        //$id = $data['id'];
+        $sql = "DELETE FROM users WHERE id=?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('i', $id);
 if ($stmt->execute()) {
@@ -62,6 +68,8 @@ if ($stmt->execute()) {
 } else {
     echo json_encode(['message' => 'Failed to delete person']);
 }
+    }
+       
 
 }
 ?>
